@@ -78,6 +78,98 @@ Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/
 }
 ```
 
+### Configure with Claude Code
+
+#### Method 1: Direct Installation (Recommended)
+
+```bash
+# Add the server using the full path to Python and server
+claude mcp add omnifocus-python /usr/bin/python3 /path/to/omnifocus-mcp-python/src/omnifocus_server.py
+```
+
+#### Method 2: Using Python 3.11+ (if you have it installed)
+
+```bash
+# With Homebrew Python 3.11
+claude mcp add omnifocus-python /opt/homebrew/bin/python3.11 /path/to/omnifocus-mcp-python/src/omnifocus_server.py
+
+# Or with system Python 3.11
+claude mcp add omnifocus-python /usr/local/bin/python3.11 /path/to/omnifocus-mcp-python/src/omnifocus_server.py
+```
+
+#### Method 3: Clone from GitHub and Install
+
+```bash
+# 1. Clone the repository
+cd ~/Desktop
+git clone https://github.com/liuyixin-louis/omnifocus-mcp-python.git
+
+# 2. Install dependencies (Python 3.11+ required)
+cd omnifocus-mcp-python
+pip install -r requirements.txt
+
+# 3. Add to Claude Code
+claude mcp add omnifocus-python python3 ~/Desktop/omnifocus-mcp-python/src/omnifocus_server.py
+```
+
+#### Verify Installation
+
+After adding, verify it's installed:
+
+```bash
+# List all MCP servers
+claude mcp list
+
+# Get details about the server
+claude mcp get omnifocus-python
+```
+
+#### Test the Server
+
+Once installed, you can test it in Claude Code by asking:
+- "Use omnifocus-python to list my flagged tasks"
+- "Use omnifocus-python to add a task 'Test from Claude Code'"
+- "Use omnifocus-python to show my inbox tasks"
+
+#### Troubleshooting Claude Code Installation
+
+If you encounter issues:
+
+1. **Python Version**: Ensure Python 3.11+ is installed
+   ```bash
+   python3 --version
+   ```
+
+2. **Dependencies**: Install MCP package
+   ```bash
+   pip install "mcp[cli]"
+   # Or for a specific Python version
+   /usr/local/bin/python3.11 -m pip install "mcp[cli]"
+   ```
+
+3. **Permissions**: Ensure Terminal has automation permissions for OmniFocus
+   - System Settings → Privacy & Security → Automation → Terminal → OmniFocus ✓
+
+4. **Remove and Re-add**: If needed
+   ```bash
+   claude mcp remove omnifocus-python
+   claude mcp add omnifocus-python python3 /path/to/omnifocus_server.py
+   ```
+
+#### Alternative: JSON Configuration
+
+You can also add it with full configuration:
+
+```bash
+claude mcp add-json omnifocus-python '{
+  "command": "python3",
+  "args": ["/path/to/omnifocus-mcp-python/src/omnifocus_server.py"],
+  "env": {}
+}'
+```
+
+The server should now be available in Claude Code! You can interact with OmniFocus through natural language commands.
+
 ## Available Tools
 
 ### Task Creation
