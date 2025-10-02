@@ -1,8 +1,14 @@
 # Codex Installation Guide for OmniFocus MCP Server
 
+## ✅ Tested and Verified Configuration
+
+This configuration has been tested and confirmed working on macOS with Codex.
+
 ## Configuration for OpenAI Codex
 
-Codex uses TOML configuration for MCP servers. Add the following to your Codex configuration file.
+Codex uses TOML configuration for MCP servers. The configuration file is located at:
+- **macOS/Linux**: `~/.codex/config.toml`
+- **Windows**: `%USERPROFILE%\.codex\config.toml`
 
 ### Option 1: Using System Python (if 3.11+ installed)
 
@@ -63,30 +69,31 @@ command = "/path/to/omnifocus-mcp-python/venv/bin/python"
 args = ["/path/to/omnifocus-mcp-python/src/omnifocus_server.py"]
 ```
 
-## Complete Example Configuration
+## Working Example Configuration (Tested)
 
-Here's a complete example with all options:
+Here's the exact configuration that has been tested and verified to work:
 
 ```toml
-# OmniFocus MCP Server Configuration for Codex
+# Add this section to your ~/.codex/config.toml file
+
 [mcp_servers.omnifocus]
-# Command to run Python interpreter
 command = "/usr/local/bin/python3.11"
-
-# Path to the server script
-args = ["/Users/username/Desktop/omnifocus-mcp-python/src/omnifocus_server.py"]
-
-# Optional: Environment variables (if needed for future extensions)
-env = { }
-
-# Optional: Increase startup timeout (default is 10s)
-# Useful if OmniFocus takes time to respond initially
+args = ["/Users/apple/Desktop/workspace/mcp-local/omnifocus-mcp-enhanced/python-omnifocus-mcp/src/omnifocus_server.py"]
 startup_timeout_sec = 20
-
-# Optional: Increase tool execution timeout (default is 60s)
-# Some OmniFocus operations might take longer with large databases
-tool_timeout_sec = 45
+tool_timeout_sec = 30
 ```
+
+Replace the path in `args` with your actual path to the omnifocus_server.py file.
+
+## Verifying the Installation
+
+After adding the configuration:
+
+1. **Restart Codex** (if it was running)
+2. **Test the connection** by asking Codex to use OmniFocus tools
+3. **Check logs** if there are issues: `~/.codex/log/`
+
+The server communicates via STDIO using the MCP protocol, so it will only respond when Codex sends requests.
 
 ## Troubleshooting
 
