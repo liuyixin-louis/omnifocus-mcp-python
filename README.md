@@ -21,33 +21,32 @@ A Python implementation of an MCP (Model-Context Protocol) server for OmniFocus,
 ### Prerequisites
 - macOS with OmniFocus 3 or later installed
 - Python 3.11 or higher
-- pip or uv package manager
+- pip package manager
 
-### Setup
+### Quick Start
 
-1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd python-omnifocus-mcp
-```
+# Clone the repository
+git clone https://github.com/liuyixin-louis/omnifocus-mcp-python.git
+cd omnifocus-mcp-python
 
-2. Install dependencies:
-
-Using pip:
-```bash
+# Install dependencies
 pip install -r requirements.txt
+
+# Test the server
+python src/omnifocus_server.py
 ```
 
-Using uv:
-```bash
-uv venv
-uv pip install -r requirements.txt
-```
+### Supported Platforms
 
-Or install directly from pyproject.toml:
-```bash
-pip install -e .
-```
+This MCP server can be integrated with multiple AI coding assistants:
+
+| Platform | Configuration Method | Documentation |
+|----------|---------------------|---------------|
+| **Claude Desktop** | JSON config file | [See below](#configure-with-claude-desktop) |
+| **Claude Code** | CLI command | [See below](#configure-with-claude-code) |
+| **OpenAI Codex** | TOML config | [CODEX_INSTALLATION.md](CODEX_INSTALLATION.md) |
+| **Other MCP Clients** | Varies | Follow MCP protocol standards |
 
 ## Usage
 
@@ -169,6 +168,21 @@ claude mcp add-json omnifocus-python '{
 ```
 
 The server should now be available in Claude Code! You can interact with OmniFocus through natural language commands.
+
+### Configure with OpenAI Codex
+
+For OpenAI Codex users, add to your Codex TOML configuration:
+
+```toml
+[mcp_servers.omnifocus]
+command = "python3"
+args = ["/path/to/omnifocus-mcp-python/src/omnifocus_server.py"]
+# Optional: Increase timeouts for OmniFocus operations
+startup_timeout_sec = 20
+tool_timeout_sec = 30
+```
+
+For detailed Codex installation instructions, see [CODEX_INSTALLATION.md](CODEX_INSTALLATION.md).
 
 ## Available Tools
 
