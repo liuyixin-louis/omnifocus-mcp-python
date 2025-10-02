@@ -147,11 +147,16 @@ tool_timeout_sec = 30
 ### 1. Python Selection Strategy
 
 ```bash
-# Priority order for Python selection:
-1. /usr/local/bin/python3.11  # System-wide Python 3.11
+# Priority order for Python selection (use FULL paths to avoid symlink issues):
+1. /Library/Frameworks/Python.framework/Versions/3.11/bin/python3  # Full framework path (most reliable)
 2. /opt/homebrew/bin/python3.11  # Homebrew on Apple Silicon
-3. python3  # System default (if 3.10+)
-4. Virtual environment Python  # Project-specific
+3. /usr/local/bin/python3.11  # System-wide symlink (may have issues)
+4. python3  # System default (if 3.10+)
+5. Virtual environment Python  # Project-specific
+
+# ⚠️ IMPORTANT: Symlinks can cause module resolution issues in Claude Code
+# If you get "ModuleNotFoundError: No module named 'mcp'" but the module IS installed,
+# use the full framework path instead of the symlink.
 ```
 
 ### 2. Path Resolution Pattern
@@ -224,9 +229,11 @@ src/server.py
 |-------|----------|
 | "Python version too old" | Install Python 3.11+ via Homebrew or python.org |
 | "Module 'mcp' not found" | Install for correct Python: `python3.11 -m pip install "mcp[cli]"` |
+| "Module 'mcp' not found (symlink issue)" | Use full framework path: `/Library/Frameworks/Python.framework/Versions/3.11/bin/python3` instead of `/usr/local/bin/python3.11` |
 | "Server failed to start" | Use absolute paths, check file permissions |
 | "No response from server" | Check automation permissions, ensure target app is running |
 | "Invalid TOML syntax" | Validate with Python: `python3 -c "import toml; toml.load('config.toml')"` |
+| "Connection closed immediately" | Check logs: `~/Library/Caches/claude-cli-nodejs/*/mcp-logs-<server-name>/` |
 
 ---
 
