@@ -48,6 +48,8 @@ This MCP server can be integrated with multiple AI coding assistants:
 | **OpenAI Codex** | TOML config | [CODEX_INSTALLATION.md](CODEX_INSTALLATION.md) |
 | **Other MCP Clients** | Varies | Follow MCP protocol standards |
 
+📚 **For detailed integration patterns and troubleshooting**: See [MCP_INTEGRATION_PATTERNS.md](MCP_INTEGRATION_PATTERNS.md)
+
 ## Usage
 
 ### Running the Server
